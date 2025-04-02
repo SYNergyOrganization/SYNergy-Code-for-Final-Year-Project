@@ -35,4 +35,16 @@ def initialresults_page():
     packet_loss = [1, 3, 7, 4, 2, 5, 9, 3]  # Packet loss from sequence analysis
     throughput = [3500, 4000, 4500, 3000, 2500, 3200, 3700, 3300]  # Throughput calculated from PCAP analysis
 
+    # *Packet Transmission Graph*
+    st.subheader("Packet Transmission Over Time")
+    fig, ax = plt.subplots()
+    ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Packets per Second')
+    ax.set_title('Wi-Fi Direct Packet Transmission')
+    ax.legend()
+    ax.grid()
+    st.pyplot(fig)
+
+
 
