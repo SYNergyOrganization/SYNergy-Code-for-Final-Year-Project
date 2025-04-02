@@ -57,6 +57,41 @@ def initialresults_page():
     ax.grid()
     st.pyplot(fig)
 
+    # **Packet Loss Graph**
+    st.subheader("Packet Loss Over Time")
+    fig, ax = plt.subplots()
+    ax.bar(time_span, packet_loss, color='orange', label='Packet Loss')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Number of Lost Packets')
+    ax.set_title('Packet Loss Events Over Time')
+    ax.legend()
+    ax.grid()
+    st.pyplot(fig)
+
+    # **Throughput Graph**
+    st.subheader("Throughput Over Time")
+    fig, ax = plt.subplots()
+    ax.plot(time_span, throughput, marker='o', linestyle='-', color='green', label='Throughput (bps)')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Throughput (bps)')
+    ax.set_title('Network Throughput Over Time')
+    ax.legend()
+    ax.grid()
+    st.pyplot(fig)
+
+    # **Power Consumption Graph**
+    st.subheader("Power Consumption by Component")
+    power_components = ["Display", "CPU Little", "CPU Big", "WLAN", "Sensor Core", "Memory", "CPU Mid", "UFS (Disk)", "Cellular", "GPU", "Camera", "GPS"]
+    avg_power_mW = [414.76, 78.02, 50, 48.6, 27.19, 26.89, 20.96, 20.7, 19.16, 5.88, 1.33, 0]
+
+    fig, ax = plt.subplots()
+    ax.barh(power_components, avg_power_mW, color='purple')
+    ax.set_xlabel('Power Consumption (mW)')
+    ax.set_title('Average Power Consumption of System Components')
+    st.pyplot(fig)
+
+    st.success("Analysis Complete! Review the graphs for insights into Wi-Fi Direct performance, packet loss, throughput, and system energy usage.")
+
 
 
 
