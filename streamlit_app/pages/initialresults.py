@@ -46,5 +46,17 @@ def initialresults_page():
     ax.grid()
     st.pyplot(fig)
 
+    # *TCP Errors Graph*
+    st.subheader("TCP Errors Over Time")
+    fig, ax = plt.subplots()
+    ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Number of TCP Errors')
+    ax.set_title('Wi-Fi Direct TCP Errors')
+    ax.legend()
+    ax.grid()
+    st.pyplot(fig)
+
+
 
 
