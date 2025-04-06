@@ -24,9 +24,13 @@ def initialresults_page():
     plt.tight_layout()
     st.pyplot(fig)
 
+    st.write("""
+        During testing, it was discovered that infrastructure, such as concrete walls, affects the performance of SwarNeTT.
+    """)
+
     # *Wi-Fi Direct & System Performance Analysis*
     st.subheader("Wi-Fi Direct & System Performance Analysis")
-    st.write("This section visualizes packet transmission, TCP errors, packet loss, throughput, and system power consumption from a Wireshark capture and system profiler.")
+    st.write("This section visualizes packet transmission, TCP errors, packet loss, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
 
     # Data extracted from Wireshark I/O Graph and Sequence Number Graph
     time_span = [0, 10, 50, 100, 150, 200, 250, 282]  # Actual timestamps from I/O graph
@@ -35,7 +39,7 @@ def initialresults_page():
     packet_loss = [1, 3, 7, 4, 2, 5, 9, 3]  # Packet loss from sequence analysis
     throughput = [3500, 4000, 4500, 3000, 2500, 3200, 3700, 3300]  # Throughput calculated from PCAP analysis
 
-    # *Packet Transmission Graph*
+    # Packet Transmission Graph
     st.subheader("Packet Transmission Over Time")
     fig, ax = plt.subplots()
     ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
@@ -46,7 +50,7 @@ def initialresults_page():
     ax.grid()
     st.pyplot(fig)
 
-    # *TCP Errors Graph*
+    # TCP Errors Graph
     st.subheader("TCP Errors Over Time")
     fig, ax = plt.subplots()
     ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
@@ -57,7 +61,7 @@ def initialresults_page():
     #ax.grid()
     st.pyplot(fig)
 
-    # **Packet Loss Graph**
+    # Packet Loss Graph
     st.subheader("Packet Loss Over Time")
     fig, ax = plt.subplots()
     ax.bar(time_span, packet_loss, color='orange', label='Packet Loss')
@@ -68,7 +72,7 @@ def initialresults_page():
     ax.grid()
     st.pyplot(fig)
 
-    # **Throughput Graph**
+    # Throughput Graph
     st.subheader("Throughput Over Time")
     fig, ax = plt.subplots()
     ax.plot(time_span, throughput, marker='o', linestyle='-', color='green', label='Throughput (bps)')
@@ -79,8 +83,8 @@ def initialresults_page():
     ax.grid()
     st.pyplot(fig)
 
-    # **Power Consumption Graph**
-    st.subheader("Power Consumption by Component")
+    # Power Consumption Graph
+    st.subheader("Energy Used by Component")
     power_components = ["Display", "CPU Little", "CPU Big", "WLAN", "Sensor Core", "Memory", "CPU Mid", "UFS (Disk)", "Cellular", "GPU", "Camera", "GPS"]
     avg_power_mW = [414.76, 78.02, 50, 48.6, 27.19, 26.89, 20.96, 20.7, 19.16, 5.88, 1.33, 0]
 
@@ -90,7 +94,7 @@ def initialresults_page():
     ax.set_title('Average Power Consumption of System Components')
     st.pyplot(fig)
 
-    st.success("Analysis Complete! Review the graphs for insights into Wi-Fi Direct performance, packet loss, throughput, and system energy usage.")
+    st.success("Initial Results Complete!")
 
 
 
