@@ -54,7 +54,7 @@ def initialresults_page():
     ax.set_ylabel('Number of TCP Errors')
     ax.set_title('Wi-Fi Direct TCP Errors')
     ax.legend()
-    ax.grid()
+    #ax.grid()
     st.pyplot(fig)
 
     # **Packet Loss Graph**
