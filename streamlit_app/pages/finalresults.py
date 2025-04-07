@@ -47,11 +47,47 @@ def finalresults_page():
     plt.tight_layout()
     st.pyplot(fig)
 
-    st.write("Addition of users did not impact the initial distance results.")
+    st.write("Addition of users did not impact the Final distance results.")
 
     # *Wi-Fi Direct & System Performance Analysis*
     st.subheader("Wi-Fi Direct & System Performance Analysis")
     st.write("This section visualizes packet transmission, TCP errors, packet loss, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
+
+    # Packet Transmission Graph
+    packetsTransmittedFinalResults_df = pd.read_csv('data\packetsTransmissionFinalResults.csv')
+
+    time_span = packetsTransmittedFinalResults_df['Interval start']
+    packets_per_second = packetsTransmittedFinalResults_df['All Packets']
+
+    st.subheader("Packet Transmission Over Time")
+    fig, ax = plt.subplots()
+    ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Packets per Second')
+    ax.set_title('Wi-Fi Direct Packet Transmission')
+    ax.legend()
+    ax.grid()
+    ax.set_xticks(time_span[::25])  # spread out every 5th label
+    plt.xticks(rotation=45)        # rotate for readability
+    st.pyplot(fig)
+
+    # TCP Errors Graph
+    tcpErrorFinalResults_df = pd.read_csv('data/tcpErrorFinalResults.csv')
+
+    time_span = tcpErrorFinalResults_df['Interval start']
+    tcp_errors = tcpErrorFinalResults_df['TCP Errors']
+
+    st.subheader("TCP Errors Over Time")
+    fig, ax = plt.subplots()
+    ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Number of TCP Errors')
+    ax.set_title('Wi-Fi Direct TCP Errors')
+    ax.legend()
+    ax.set_xticks(time_span[::25])  # show every 5th label to spread out x-axis
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
+
 
     # Throughput over time
     st.subheader("Throughput Over Time")
