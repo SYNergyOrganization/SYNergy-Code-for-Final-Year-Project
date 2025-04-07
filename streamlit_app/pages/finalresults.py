@@ -69,6 +69,7 @@ def finalresults_page():
     ax.grid()
     ax.set_xticks(time_span[::25])  # spread out every 5th label
     plt.xticks(rotation=45)        # rotate for readability
+    ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
 
     # TCP Errors Graph
@@ -78,6 +79,7 @@ def finalresults_page():
     tcp_errors = tcpErrorFinalResults_df['TCP Errors']
 
     st.subheader("TCP Errors Over Time")
+    st.write("This graph visualizes the frequency of TCP errors over time, based on the latest PCAP analysis.")
     fig, ax = plt.subplots()
     ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
     ax.set_xlabel('Time (seconds)')
@@ -86,6 +88,7 @@ def finalresults_page():
     ax.legend()
     ax.set_xticks(time_span[::25])  # show every 5th label to spread out x-axis
     plt.xticks(rotation=45)
+    ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
 
 
@@ -168,44 +171,6 @@ def finalresults_page():
     ax.barh(labels_idle, power_load, color='salmon')  
     ax.set_xlabel('Power Consumption (mW)')
     ax.set_title('Under Load: Average Power Consumption by Component')
-    st.pyplot(fig)
-
-    # TCP errors over time from wireshark
-    st.subheader("TCP errors over time")
-    st.write("This graph visualizes the frequency of TCP errors over time, based on the latest PCAP analysis.")
-
-    time_seconds = list(range(0, 350))
-    tcp_errors = [
-        1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 2, 0, 0, 1,
-        0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-        1, 0, 2, 3, 0, 2, 4, 2, 3, 0,
-        4, 2, 2, 2, 4, 2, 2, 2, 2, 4,
-        4, 2, 4, 3, 3, 4, 3, 2, 4, 3,
-        4, 4, 4, 4, 4, 3, 2, 3, 3, 2,
-        4, 4, 3, 3, 2, 2, 1, 2, 2, 3,
-        4, 2, 1, 4, 3, 3, 2, 1, 3, 4,
-        2, 3, 2, 1, 3, 4, 2, 3, 3, 4,
-        2, 1, 4, 3, 2, 3, 2, 3, 3, 4,
-        3, 4, 2, 3, 2, 3, 3, 2, 4, 2,
-        2, 3, 1, 2, 3, 3, 3, 2, 2, 3,
-        1, 2, 2, 3, 2, 2, 3, 1, 2, 2,
-        1, 2, 3, 2, 2, 3, 3, 1, 1, 3,
-        2, 3, 2, 1, 2, 2, 2, 2, 3, 1,
-        2, 2, 2, 1, 2, 3, 2, 2, 3, 1,
-        1, 1, 2, 3, 2, 1, 1, 2, 2, 2,
-        2, 1, 1, 1, 1, 1, 1, 2, 1, 2,
-        2, 2, 2, 2, 1, 2, 2, 1, 1, 2,
-        2, 2, 1, 1, 2, 1, 2, 2, 1, 2
-    ]
-
-    fig, ax = plt.subplots(figsize=(14, 6))
-    ax.bar(time_seconds[:len(tcp_errors)], tcp_errors, color='darkred', label='TCP Errors')
-    ax.set_xlabel('Time (s)')
-    ax.set_ylabel('Packets/s')
-    ax.set_title('TCP Errors Over Time')
-    ax.legend()
     st.pyplot(fig)
 
     st.success("Final Results Complete")
