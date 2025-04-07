@@ -42,6 +42,11 @@ def initialresults_page():
     throughput = [3500, 4000, 4500, 3000, 2500, 3200, 3700, 3300]  # Throughput calculated from PCAP analysis
 
     # Packet Transmission Graph
+    packetsTransmittedInitialResults_df = pd.read_csv('data/packetsTransmittedInitialResults.csv')
+
+    time_span = packetsTransmittedInitialResults_df['Interval start']
+    packets_per_second = packetsTransmittedInitialResults_df['All Packets']
+
     st.subheader("Packet Transmission Over Time")
     fig, ax = plt.subplots()
     ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
@@ -50,9 +55,16 @@ def initialresults_page():
     ax.set_title('Wi-Fi Direct Packet Transmission')
     ax.legend()
     ax.grid()
+    ax.set_xticks(time_span[::5])  # spread out every 5th label
+    plt.xticks(rotation=45)        # rotate for readability
     st.pyplot(fig)
 
     # TCP Errors Graph
+    tcpErrorInitialResults_df = pd.read_csv('data/tcpErrorInitialResults.csv')
+
+    time_span = tcpErrorInitialResults_df['Interval start']
+    tcp_errors = tcpErrorInitialResults_df['TCP Errors']
+
     st.subheader("TCP Errors Over Time")
     fig, ax = plt.subplots()
     ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
@@ -60,7 +72,8 @@ def initialresults_page():
     ax.set_ylabel('Number of TCP Errors')
     ax.set_title('Wi-Fi Direct TCP Errors')
     ax.legend()
-    #ax.grid()
+    ax.set_xticks(time_span[::5])  # show every 5th label to spread out x-axis
+    plt.xticks(rotation=45)
     st.pyplot(fig)
 
     # Packet Loss Graph
