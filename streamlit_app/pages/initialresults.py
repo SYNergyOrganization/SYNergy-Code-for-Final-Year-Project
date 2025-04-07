@@ -55,7 +55,7 @@ def initialresults_page():
     ax.set_title('Wi-Fi Direct Packet Transmission')
     ax.legend()
     ax.grid()
-    ax.set_xticks(time_span[::5])  # spread out every 5th label
+    ax.set_xticks(time_span[::25])  # spread out every 5th label
     plt.xticks(rotation=45)        # rotate for readability
     st.pyplot(fig)
 
@@ -72,7 +72,7 @@ def initialresults_page():
     ax.set_ylabel('Number of TCP Errors')
     ax.set_title('Wi-Fi Direct TCP Errors')
     ax.legend()
-    ax.set_xticks(time_span[::5])  # show every 5th label to spread out x-axis
+    ax.set_xticks(time_span[::25])  # show every 5th label to spread out x-axis
     plt.xticks(rotation=45)
     st.pyplot(fig)
 
