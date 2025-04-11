@@ -76,18 +76,12 @@ def initialresults_page():
     plt.xticks(rotation=45)
     st.pyplot(fig)
 
-    # Packet Loss Graph
-    st.subheader("Packet Loss Over Time")
-    fig, ax = plt.subplots()
-    ax.bar(time_span, packet_loss, color='orange', label='Packet Loss')
-    ax.set_xlabel('Time (seconds)')
-    ax.set_ylabel('Number of Lost Packets')
-    ax.set_title('Packet Loss Events Over Time')
-    ax.legend()
-    ax.grid()
-    st.pyplot(fig)
 
     # Throughput Graph
+    ThroughputErrorInitialResults_df= pd.read_csv("data/throughput_for_inital.csv")
+    
+    time_span= ThroughputErrorInitialResults_df["Interval start"]
+    throughput= ThroughputErrorInitialResults_df["Throughput"]
     st.subheader("Throughput Over Time")
     fig, ax = plt.subplots()
     ax.plot(time_span, throughput, marker='o', linestyle='-', color='green', label='Throughput (bps)')
