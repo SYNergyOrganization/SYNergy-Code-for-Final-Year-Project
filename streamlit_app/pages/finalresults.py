@@ -60,15 +60,16 @@ def finalresults_page():
     packets_per_second = packetsTransmittedFinalResults_df['All Packets']
 
     st.subheader("Packet Transmission Over Time")
-    fig, ax = plt.subplots()
+
+    fig, ax = plt.subplots(figsize=(14, 5))
     ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
-    ax.set_xlabel('Time (seconds)')
+    ax.set_xlabel('Interval')
     ax.set_ylabel('Packets per Second')
     ax.set_title('Wi-Fi Direct Packet Transmission')
     ax.legend()
     ax.grid()
-    ax.set_xticks(time_span[::25])  # spread out every 5th label
-    plt.xticks(rotation=45)        # rotate for readability
+    ax.set_xticks(time_span[::25])  
+    plt.xticks(rotation=45)        
     ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
 
@@ -80,13 +81,13 @@ def finalresults_page():
 
     st.subheader("TCP Errors Over Time")
     st.write("This graph visualizes the frequency of TCP errors over time, based on the latest PCAP analysis.")
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(14, 5))
     ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
     ax.set_xlabel('Time (seconds)')
     ax.set_ylabel('Number of TCP Errors')
     ax.set_title('Wi-Fi Direct TCP Errors')
     ax.legend()
-    ax.set_xticks(time_span[::25])  # show every 5th label to spread out x-axis
+    ax.set_xticks(time_span[::25])
     plt.xticks(rotation=45)
     ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
