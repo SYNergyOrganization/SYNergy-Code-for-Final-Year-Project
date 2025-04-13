@@ -32,31 +32,26 @@ def initialresults_page():
 
     # *Wi-Fi Direct & System Performance Analysis*
     st.subheader("Wi-Fi Direct & System Performance Analysis")
-    st.write("This section visualizes packet transmission, TCP errors, packet loss, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
+    st.write("This section visualizes packet transmission, TCP errors, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
 
-    # Data extracted from Wireshark I/O Graph and Sequence Number Graph
-    time_span = [0, 10, 50, 100, 150, 200, 250, 282]  # Actual timestamps from I/O graph
-    packets_per_second = [5, 20, 30, 10, 5, 15, 25, 10]  # Packet transmission rates from I/O graph
-    tcp_errors = [0, 2, 5, 3, 1, 4, 6, 2]  # TCP Errors extracted from graph
-    packet_loss = [1, 3, 7, 4, 2, 5, 9, 3]  # Packet loss from sequence analysis
-    throughput = [3500, 4000, 4500, 3000, 2500, 3200, 3700, 3300]  # Throughput calculated from PCAP analysis
-
-    # Packet Transmission Graph
+    # Packet Transmission Graph 
     packetsTransmittedInitialResults_df = pd.read_csv('data/packetsTransmittedInitialResults.csv')
 
     time_span = packetsTransmittedInitialResults_df['Interval start']
     packets_per_second = packetsTransmittedInitialResults_df['All Packets']
 
     st.subheader("Packet Transmission Over Time")
-    fig, ax = plt.subplots()
+
+    fig, ax = plt.subplots(figsize=(14, 5))
     ax.plot(time_span, packets_per_second, marker='o', linestyle='-', color='b', label='Packets per Second')
-    ax.set_xlabel('Time (seconds)')
+    ax.set_xlabel('Interval')
     ax.set_ylabel('Packets per Second')
     ax.set_title('Wi-Fi Direct Packet Transmission')
     ax.legend()
     ax.grid()
-    ax.set_xticks(time_span[::25])  # spread out every 5th label
-    plt.xticks(rotation=45)        # rotate for readability
+    ax.set_xticks(time_span[::25]) 
+    plt.xticks(rotation=45)         
+    ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
 
     # TCP Errors Graph
@@ -72,24 +67,25 @@ def initialresults_page():
     ax.set_ylabel('Number of TCP Errors')
     ax.set_title('Wi-Fi Direct TCP Errors')
     ax.legend()
-    ax.set_xticks(time_span[::25])  # show every 5th label to spread out x-axis
+    ax.set_xticks(time_span[::25])  
     plt.xticks(rotation=45)
     st.pyplot(fig)
 
-
-    # Throughput Graph
-    ThroughputErrorInitialResults_df= pd.read_csv("data/throughput_for_inital.csv")
-    
-    time_span= ThroughputErrorInitialResults_df["Interval start"]
-    throughput= ThroughputErrorInitialResults_df["Throughput"]
+    # Throughput over time
     st.subheader("Throughput Over Time")
-    fig, ax = plt.subplots()
-    ax.plot(time_span, throughput, marker='o', linestyle='-', color='green', label='Throughput (bps)')
-    ax.set_xlabel('Time (seconds)')
-    ax.set_ylabel('Throughput (bps)')
-    ax.set_title('Network Throughput Over Time')
-    ax.legend()
-    ax.grid()
+    ThroughputErrorInitialResults_df = pd.read_csv("data/throughput_for_inital.csv")
+
+    fig, ax = plt.subplots(figsize=(14, 5))
+    ax.plot(
+        ThroughputErrorInitialResults_df["Interval start"],
+        ThroughputErrorInitialResults_df["Throughput"],
+        color="mediumblue",
+        linewidth=1.5
+    )
+    ax.set_title("Network Throughput Over Time", fontsize=16)
+    ax.set_xlabel("Interval Start")
+    ax.set_ylabel("Throughput (Bytes/sec)")
+    ax.grid(True, linestyle="--", alpha=0.5)
     st.pyplot(fig)
 
     # Power Consumption Graph

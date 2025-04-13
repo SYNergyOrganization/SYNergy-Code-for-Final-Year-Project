@@ -51,10 +51,10 @@ def finalresults_page():
 
     # *Wi-Fi Direct & System Performance Analysis*
     st.subheader("Wi-Fi Direct & System Performance Analysis")
-    st.write("This section visualizes packet transmission, TCP errors, packet loss, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
+    st.write("This section visualizes packet transmission, TCP errors, throughput from PCAPdroid and analyzed by WireShark. Energy Used was determined using Android Studio.")
 
     # Packet Transmission Graph
-    packetsTransmittedFinalResults_df = pd.read_csv('data\packetsTransmissionFinalResults.csv')
+    packetsTransmittedFinalResults_df = pd.read_csv('data/packetsTransmissionFinalResults.csv')
 
     time_span = packetsTransmittedFinalResults_df['Interval start']
     packets_per_second = packetsTransmittedFinalResults_df['All Packets']
@@ -80,7 +80,6 @@ def finalresults_page():
     tcp_errors = tcpErrorFinalResults_df['TCP Errors']
 
     st.subheader("TCP Errors Over Time")
-    st.write("This graph visualizes the frequency of TCP errors over time, based on the latest PCAP analysis.")
     fig, ax = plt.subplots(figsize=(14, 5))
     ax.bar(time_span, tcp_errors, color='r', label='TCP Errors')
     ax.set_xlabel('Time (seconds)')
@@ -92,65 +91,21 @@ def finalresults_page():
     ax.set_xlim(min(time_span), max(time_span))
     st.pyplot(fig)
 
-
     # Throughput over time
     st.subheader("Throughput Over Time")
 
-    throughput = [
-        6333, 8620, 4518, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 80, 0, 0, 80,
-        400, 0, 200, 0, 0, 0, 100, 100, 0, 0,
-        0, 0, 0, 0, 0, 200, 0, 0, 0, 0,
-        0, 0, 400, 0, 200, 0, 0, 0, 200, 0,
-        0, 200, 0, 0, 0, 400, 100, 300, 0, 0,
-        0, 500, 100, 200, 400, 0, 200, 200, 0, 0,
-        400, 0, 100, 100, 200, 400, 0, 200, 0, 200,
-        0, 200, 0, 200, 0, 0, 200, 0, 0, 600,
-        0, 400, 0, 400, 0, 400, 200, 0, 0, 200,
-        0, 0, 0, 0, 600, 200, 400, 100, 100, 0,
-        200, 0, 0, 0, 400, 400, 200, 200, 300, 0,
-        700, 400, 200, 500, 300, 200, 200, 0, 200, 500,
-        100, 0, 0, 0, 400, 0, 0, 0, 200, 600,
-        0, 200, 0, 0, 0, 500, 100, 0, 0, 0,
-        600, 0, 200, 200, 400, 0, 200, 200, 0, 0,
-        0, 0, 0, 0, 600, 0, 200, 200, 0, 0,
-        200, 200, 0, 0, 0, 0, 0, 200, 0, 200,
-        400, 0, 0, 0, 200, 0, 0, 0, 200, 400,
-        0, 200, 0, 0, 0, 200, 200, 0, 0, 0,
-        0, 200, 400, 100, 300, 0, 0, 0, 200, 0,
-        0, 0, 200, 0, 400, 0, 400, 0, 0, 0,
-        400, 0, 0, 0, 0, 0, 0, 0, 0, 400,
-        0, 0, 200, 0, 0, 0, 0, 0, 0, 400,
-        0, 200, 0, 0, 0, 200, 200, 0, 0, 0,
-        0, 0, 0, 200, 200, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 400, 0, 400, 0, 0, 0,
-        300, 100, 0, 0, 0, 0, 0, 0, 200, 200,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 400,
-        0, 200, 0, 0, 0, 400, 0, 0, 0, 0,
-        0, 0, 200, 0, 200, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        200, 0, 0, 0, 0, 0, 0, 100, 0, 100,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 200
-    ]
-
-
-    df = pd.DataFrame({
-        "Interval": range(len(throughput)),
-        "Throughput": throughput
-    })
+    throughput_df = pd.read_csv("data/throughput_for_final.csv")
 
     fig, ax = plt.subplots(figsize=(14, 5))
-    ax.plot(df["Interval"], df["Throughput"], color="mediumblue", linewidth=1.5)
+    ax.plot(throughput_df["Interval start"], throughput_df["Throughput"], color="mediumblue", linewidth=1.5)
     ax.set_title("Network Throughput Over Time", fontsize=16)
-    ax.set_xlabel("Time Interval (s)")
+    ax.set_xlabel("Interval Start")
     ax.set_ylabel("Throughput (Bytes/sec)")
     ax.grid(True, linestyle="--", alpha=0.5)
     st.pyplot(fig)
 
     # Battery usage at idle
-    st.subheader("Battery Consumption while app is idling")
+    st.subheader("Energy Used by Component While SwarNeTT is suspended")
     st.write("This bar chart shows the average power usage (in mW) by each system component while SwarNeTT is idle for approximately 5 minutes.")
 
     labels_idle = ["CPU Big", "Display", "WLAN", "CPU Little", "Memory", "Sensor Core", "UFS (Disk)", "Cellular", "CPU Mid", "GPU", "Camera", "GPS"]
@@ -163,7 +118,7 @@ def finalresults_page():
     st.pyplot(fig)
 
     # Battery usage under load
-    st.subheader("Battery Consumption while app is under load")
+    st.subheader("Energy Used by Component While SwarNeTT is Under Load")
     st.write("This bar chart shows the average power usage (in mW) by each system component while SwarNeTT is actively being used for approximately 5 minutes.")
 
     power_load = [1202.04, 455.05, 231.36, 200.22, 58.7, 28.19, 26.25, 18.19, 11.1, 7.15, 0.95, 0]
