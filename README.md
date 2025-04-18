@@ -54,6 +54,8 @@ To get started with SwarNeTT, clone this repository and install the necessary de
 Running the Application
 You can start the SwarNeTT application using Streamlit for the frontend visualization and analysis:
     ```bash
+    
+    pip install -r requirements.txt
     cd SYNergy-Code-for-Final-Year-Project/streamlit_app
     streamlit run app.py
 
