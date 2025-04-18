@@ -56,7 +56,7 @@ You can start the SwarNeTT application using Streamlit for the frontend visualiz
     ```bash
     
     pip install -r requirements.txt
-    cd SYNergy-Code-for-Final-Year-Project/streamlit_app
+    cd streamlit_app
     streamlit run app.py
 
 ## File Structure
